@@ -4,83 +4,20 @@
 
 /// Uncomment these lines if you want to debug using couts
 #include <iostream>
+
+#include<vector>
+
+///Create local reference with "", to file
+#include "Vector3.hpp"
+#include "Triangle.hpp"
 using namespace std;
 
 
-class Vector3{
-
-  public:
-    float x, y, z;
-
-    Vector3& operator+= (const Vector3& rhs){
-      x += rhs.x;
-      y += rhs.y;
-      z += rhs.z;
-      return *this;
-    }
-
-    Vector3& operator-= (const Vector3& rhs){
-      x -= rhs.x;
-      y -= rhs.y;
-      z -= rhs.z;
-      return *this;
-    }
-
-    Vector3& operator*= (const float rhs){
-      x *= rhs;
-      y *= rhs;
-      z *= rhs;
-      return *this;
-    }
-
-    float dot(const Vector3& rhs){
-      return x * rhs.x + y * rhs.y + z * rhs.z;
-    }
-
-    Vector3 cross(const Vector3& rhs){
-      return Vector3{
-        y*rhs.z-z*rhs.y,
-        z*rhs.x-x*rhs.z,
-        x*rhs.y-y*rhs.x
-      };
-      
-    }
-
-
-    float length(){
-      return sqrt(x*x+y*y+z*z);
-    }
-
-
-    Vector3 normalize(){
-      float l = length();
-      return Vector3{x / l, y / l, z / l};
-    }
-};
-
-
-inline Vector3 &operator+(Vector3 lhs, const Vector3 &rhs){
-  return lhs += rhs;
-}
-
-inline Vector3 &operator-(Vector3 lhs, const Vector3 &rhs){
-  return lhs -= rhs;
-}
-
-inline Vector3 &operator*(Vector3 lhs, const float rhs){
-  return lhs *= rhs;
-}
-
-inline std::ostream &operator<<(std::ostream &os, const Vector3 &v) {
-    return os << '(' << v.x << ", " << v.y << ", " << v.z << ')';
-}
 
 
 
-class Triangle{
-  public:
-  Vector3 one, two, three;
-};
+
+
 
 
 
@@ -107,6 +44,9 @@ int main()
   unsigned char pixels[w * h * 3];
 
   Triangle triangle = Triangle{Vector3{-1, 1, 0}, Vector3{-1, -1, 0}, Vector3{1, -1, 0}};
+  Triangle triangle2 = Triangle{Vector3{-1, 1, 0.5}, Vector3{-1, -1, -.5}, Vector3{1, -1, 0.5}};
+
+  vector<Triangle> triangles = {triangle, triangle2};
 
   Vector3 background_color = Vector3{150, 0, 255};
 
@@ -137,6 +77,14 @@ int main()
       Vector3 temp = (target - camera_origin);
 
       Vector3 ray = temp.normalize();
+
+      ///FarPlane
+      float closest_t = 10000000;
+
+
+      for(const Triangle& triangle : triangles){
+
+      
       
       Vector3 edge_one = triangle.one - triangle.two;
       Vector3 edge_two = triangle.three - triangle.two;
@@ -145,6 +93,10 @@ int main()
       float d = -abc.dot(triangle.one);
 
       float t = -(abc.dot(camera_origin)+d)/abc.dot(ray);
+
+      if(t > closest_t)
+        continue;
+      else
 
       
       Vector3 collision_point = ray * t + camera_origin;
@@ -173,6 +125,8 @@ int main()
       }
       else{
 
+        closest_t = t;
+
         r = 255 * u + 0 * v + 255 * a;
         g = 255 * u + 255 * v + 0 * a;
         b = 0 * u + 0 * v + 0 * a;
@@ -185,6 +139,7 @@ int main()
 
       
     }
+  }
   }
 
   ///Write the final image as a png
