@@ -10,6 +10,7 @@
 ///Create local reference with "", to file
 #include "Vector3.hpp"
 #include "Triangle.hpp"
+#include "file_util.h"
 using namespace std;
 
 
@@ -32,7 +33,7 @@ int main()
 
   temp += Vector3{1,1,1};
 
-  cout << temp << endl;
+  //cout << temp << endl;
 
   /// Width of the final image
   const int w = 640;
@@ -44,7 +45,7 @@ int main()
   unsigned char pixels[w * h * 3];
 
   Triangle triangle = Triangle{Vector3{-1, 1, 0}, Vector3{-1, -1, 0}, Vector3{1, -1, 0}};
-  Triangle triangle2 = Triangle{Vector3{-1, 1, 0.5}, Vector3{-1, -1, -.5}, Vector3{1, -1, 0.5}};
+  Triangle triangle2 = Triangle{Vector3{1, 1, 0.5}, Vector3{-1, -1, -.5}, Vector3{1, -1, 0.5}};
 
   vector<Triangle> triangles = {triangle, triangle2};
 
@@ -82,7 +83,7 @@ int main()
       float closest_t = 10000000;
 
 
-      for(const Triangle& triangle : triangles){
+      for(const Triangle &triangle : triangles){
 
       
       
@@ -96,7 +97,7 @@ int main()
 
       if(t > closest_t)
         continue;
-      else
+      
 
       
       Vector3 collision_point = ray * t + camera_origin;
@@ -131,14 +132,14 @@ int main()
         g = 255 * u + 255 * v + 0 * a;
         b = 0 * u + 0 * v + 0 * a;
       }
-
+    }
 
       pixels[index] = r;
       pixels[index + 1] = g;
       pixels[index + 2] = b;
 
       
-    }
+    
   }
   }
 
@@ -146,3 +147,34 @@ int main()
   stbi_write_png("image.png", w, h, 3, pixels, w * 3);
   return 0;
 }
+
+
+class Parser{
+  public:
+
+  string NameOfFileToParse;
+
+  string fileContents;
+
+  //fileContents = (NameOfFileToParse).Read();
+  
+  //fileContents.strip()
+
+  //Place lines from file into corresponding lists below, seperating them using spaces and newlines.
+  
+  //actual vectors
+  //Vertices
+  vector<Vector3> v = {};
+
+  //actual vectors
+  //Normals
+  vector<Vector3> vn = {};
+
+  //z always = 0, otherwise actual vector
+  //Texture info
+  vector<Vector3> vt = {};
+
+  //Vector3's whos values represent indexes of the above lists. IE f = {{5, 1, 1},c{3, 2, 2}}
+  //f = {{5, 1, 1}} = the face represented by this vec3 is made up of vertice index 5, normal index 1, and texture index 1. 
+  vector<Vector3> f = {};
+};

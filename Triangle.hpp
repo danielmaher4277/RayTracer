@@ -1,7 +1,7 @@
 #ifndef TRIANGLE_42
 #define TRIANGLE_42
 
-#inlcude "Vector3.hpp"
+#include "Vector3.hpp"
 
 class Triangle{
   public:
