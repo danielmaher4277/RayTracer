@@ -19,7 +19,7 @@ using namespace std;
 
 Parser parseObj;
 
-vector<Triangle> triangles = parseObj.Parse("Untitled.obj");
+vector<Triangle> triangles = parseObj.Parse("Marvin.obj");
 
 
 
@@ -98,7 +98,7 @@ float trace_ray_distance(Vector3 origin, Vector3 direction){
 
 
 
-Vector3 trace_ray(Vector3 origin, Vector3 direction, int bounces = 2){
+Vector3 trace_ray(Vector3 origin, Vector3 direction, int bounces = 3){
   
 
   Vector3 color = Vector3{background_color.x, background_color.y, background_color.z};
@@ -160,7 +160,7 @@ Vector3 trace_ray(Vector3 origin, Vector3 direction, int bounces = 2){
 
           Vector3 diffuse = base_color * strength;
 
-          if(trace_ray_distance(collision_point, light_direction) != INFINITY){
+          if(trace_ray_distance(collision_point + light_direction * 0.0001, light_direction) != INFINITY){
             diffuse = Vector3{0,0,0};
           }
 
