@@ -19,7 +19,7 @@ using namespace std;
 
 Parser parseObj;
 
-vector<Triangle> triangles = parseObj.Parse("Marvin.obj");
+vector<Triangle> triangles = parseObj.Parse("test3.obj");
 
 
 
@@ -98,7 +98,7 @@ float trace_ray_distance(Vector3 origin, Vector3 direction){
 
 
 
-Vector3 trace_ray(Vector3 origin, Vector3 direction, int bounces = 3){
+Vector3 trace_ray(Vector3 origin, Vector3 direction, int bounces = 4){
   
 
   Vector3 color = Vector3{background_color.x, background_color.y, background_color.z};
@@ -144,13 +144,14 @@ Vector3 trace_ray(Vector3 origin, Vector3 direction, int bounces = 3){
 
         if(diff > .00001 || isnan(sum)){
           //not in triangle
+          //color = Vector3{0, 0,0};
         }
         else{
           //In triangle
           closestT = t;
 
           Vector3 base_color = Vector3{255, 255, 255};
-          Vector3 light_direction = Vector3{-.5, 1, .5}.normalize();
+          Vector3 light_direction = Vector3{1, 1, 0}.normalize();
 
           Vector3 ambient = base_color * .1;
 
@@ -176,13 +177,14 @@ Vector3 trace_ray(Vector3 origin, Vector3 direction, int bounces = 3){
           Vector3 _color = ambient + diffuse + reflective;
 
           color = _color;
+          //cout << color << endl;
         }
     }
     return color;
 }
 
 
-
+int counter = 0;
 
 
 
@@ -201,6 +203,8 @@ int main()
     for (int x = 0; x < w; x++)
     {
 
+      
+
       int index = y * w * 3 + x * 3;
 
       unsigned char r = background_color.x;
@@ -216,11 +220,21 @@ int main()
 
       Vector3 color = trace_ray(camera_origin, ray);
 
+
+      // if(counter < 200){
+      //   counter++;
+      // }
+      // else{
+      //   counter = 0;
+      // }
+      
+
+
       r = color.x;
       g = color.y;
       b = color.z;
 
-
+      //cout << counter << endl;
 
       pixels[index] = r;
       pixels[index + 1] = g;

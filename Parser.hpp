@@ -203,6 +203,11 @@ class Parser{
     cornersTempCounter3 += 3;
   }
 
+  // for(Vector3 corner : cornersFinal){
+  //   cout << corner << endl;
+  // }
+  
+
   // Vector3 newTempVec = cornersFinal[0];
   // cout << newTempVec.x << endl;
 
@@ -215,11 +220,19 @@ class Parser{
   for(int x = 0; x < cornersFinal.size() / 3; x++){
     //Each loop needs to get three vectors threes from the faces 
     Triangle tempT = Triangle{Vector3{cornersFinal[TriangleCounter1].x, cornersFinal[TriangleCounter1].y, cornersFinal[TriangleCounter1].z}, Vector3{cornersFinal[TriangleCounter2].x, cornersFinal[TriangleCounter2].y, cornersFinal[TriangleCounter2].z}, Vector3{cornersFinal[TriangleCounter3].x, cornersFinal[TriangleCounter3].y, cornersFinal[TriangleCounter3].z}};
+    
+
+
+    
 
     tempT.one = posVectorsFinal[tempT.one.x - 1];
     tempT.two = posVectorsFinal[tempT.two.x - 1];
     tempT.three = posVectorsFinal[tempT.three.x - 1];
 
+                   
+
+
+    
     posTriangles.push_back(tempT);
 
     TriangleCounter1 += 3;
