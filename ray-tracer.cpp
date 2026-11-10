@@ -19,7 +19,9 @@ using namespace std;
 
 Parser parseObj;
 
-vector<Triangle> triangles = parseObj.Parse("test3.obj");
+vector<Triangle> triangles = parseObj.Parse("test7.obj");
+
+//vector<Triangle> triangles = {Triangle{Vector3{0, 0, 0}, Vector3{0, 1, 0}, Vector3{1, 0, 0}}};
 
 
 
@@ -33,7 +35,7 @@ const int h = 640;
 unsigned char pixels[w * h * 3];
 
 /// Background Color
-Vector3 background_color = Vector3{100, 100, 255};
+Vector3 background_color = Vector3{255, 255, 255};
 
 
 
@@ -153,7 +155,7 @@ Vector3 trace_ray(Vector3 origin, Vector3 direction, int bounces = 4){
           Vector3 base_color = Vector3{255, 255, 255};
           Vector3 light_direction = Vector3{1, 1, 0}.normalize();
 
-          Vector3 ambient = base_color * .1;
+          Vector3 ambient = Vector3{base_color.x * .1f, base_color.y * .1f, base_color.z * .1f};
 
           Vector3 normal = p.normalize();
 
