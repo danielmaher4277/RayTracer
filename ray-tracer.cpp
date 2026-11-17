@@ -9,6 +9,7 @@
 // #include "file_util.h"
 
 #include "Parser.hpp"
+#include "Matrix.hpp"
 #include<iostream>
 #include<algorithm>
 
@@ -22,6 +23,9 @@ Parser parseObj;
 vector<Triangle> triangles = parseObj.Parse("test12.obj");
 
 //vector<Triangle> triangles = {Triangle{Vector3{0, 0, 0}, Vector3{0, 1, 0}, Vector3{1, 0, 0}}};
+Matrix matrixObj;
+
+vector<Triangle> translatedTriangles = matrixObj.TranslateTriangles(triangles);
 
 
 
@@ -197,6 +201,18 @@ int main()
   Vector3 camera_origin = Vector3{0, 0, 1};
   Vector3 camera_look_at = Vector3{0, 0, 0};
   Vector3 camera_up = Vector3{0, 1, 0};
+
+
+  ///Testing
+
+
+
+// for(float tri: translatedTriangles){
+//   cout<< tri << endl;
+// }
+
+
+  ///Testing
 
 
   /// Loop over each line doing down
