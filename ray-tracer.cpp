@@ -52,7 +52,7 @@ float trace_ray_distance(Vector3 origin, Vector3 direction){
 
     float closestT = INFINITY;
 
-    for (const Triangle &triangle : triangles){
+    for (const Triangle &triangle : translatedTriangles){
 
         Vector3 edge_one = triangle.one - triangle.two;
         Vector3 edge_two = triangle.three - triangle.two;
@@ -115,7 +115,7 @@ Vector3 trace_ray(Vector3 origin, Vector3 direction, int bounces = 4){
 
   float closestT = 1000000;
 
-  for (const Triangle &triangle : triangles){
+  for (const Triangle &triangle : translatedTriangles){
         Vector3 edge_one = triangle.one - triangle.two;
         Vector3 edge_two = triangle.three - triangle.two;
         Vector3 p = edge_two.cross(edge_one);
@@ -205,7 +205,15 @@ int main()
 
   ///Testing
 
+  for(Triangle tri : triangles){
+    cout << tri.one << tri.two << tri.three << endl;
+  }
 
+  cout << "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||" << endl;
+
+  for(Triangle tri : translatedTriangles){
+    cout << tri.one << tri.two << tri.three << endl;
+  }
 
 // for(float tri: translatedTriangles){
 //   cout<< tri << endl;
